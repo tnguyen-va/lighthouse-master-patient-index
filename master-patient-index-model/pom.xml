@@ -3,12 +3,12 @@
   <parent>
     <groupId>gov.va.api.health</groupId>
     <artifactId>api-starter</artifactId>
-    <version>7.0.19</version>
+    <version>7.0.20</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>gov.va.api.lighthouse</groupId>
   <artifactId>master-patient-index-model</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
   <properties>
     <checkstyle.skip>true</checkstyle.skip>
