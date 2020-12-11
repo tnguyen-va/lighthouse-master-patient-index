@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+  <!-- Exclusions can be defined here and should include a comment on why the finding can be ignored -->
+  <!--
+  This finding is reported where keystores are loaded to configure SSL endpoints during start up.
+  This is safe because resource URL is verified to be either a classpath or local file. Remote URLs
+  are not allowed. Furthermore, this resource path is provided as configuration and is not user or
+  caller specified.
+  -->
+  <Match>
+    <Class name="gov.va.api.lighthouse.mpi.SoapMasterPatientIndexClient"/>
+    <Bug pattern="URLCONNECTION_SSRF_FD"/>
+  </Match>
+</FindBugsFilter>

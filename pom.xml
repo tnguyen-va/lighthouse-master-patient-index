@@ -5,6 +5,7 @@
     <groupId>gov.va.api.health</groupId>
     <artifactId>health-apis-parent</artifactId>
     <version>7.0.20</version>
+    <relativePath/>
   </parent>
   <groupId>gov.va.api.lighthouse</groupId>
   <artifactId>master-patient-index-parent</artifactId>
@@ -12,5 +13,6 @@
   <packaging>pom</packaging>
   <modules>
     <module>master-patient-index-model</module>
+    <module>master-patient-index-client</module>
   </modules>
 </project>

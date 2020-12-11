@@ -32,3 +32,6 @@ target/
 
 secrets.conf
 *.pem
+
+model
+client
