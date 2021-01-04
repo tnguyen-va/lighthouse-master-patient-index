@@ -78,7 +78,7 @@ public class Mpi1309Creator {
 
     message.setId(requesterId());
     message.setCreationTime(TS.tSBuilder().value(creationTime()).build());
-    message.setVersionCode(csWithCode("3.5"));
+    message.setVersionCode(csWithCode("4.0"));
     message.setInteractionId(II.iIBuilder().root("2.16.840.1.113883.1.6").build());
     message.setProcessingCode(csWithCode(processingCode()));
     message.setProcessingModeCode(csWithCode(processingModeCode()));
