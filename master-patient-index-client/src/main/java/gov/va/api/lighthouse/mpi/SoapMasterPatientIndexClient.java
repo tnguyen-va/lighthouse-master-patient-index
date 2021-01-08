@@ -18,13 +18,14 @@ import javax.net.ssl.X509KeyManager;
 import javax.xml.ws.BindingProvider;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.hl7.v3.PRPAIN201305UV02;
+import org.hl7.v3.PRPAIN201306UV02;
 import org.hl7.v3.PRPAIN201309UV02;
 import org.hl7.v3.PRPAIN201310UV02;
 import org.springframework.util.ResourceUtils;
 
 @Getter
 public class SoapMasterPatientIndexClient implements MasterPatientIndexClient {
-
   private final SSLContext sslContext;
 
   private final MpiConfig config;
@@ -52,24 +53,19 @@ public class SoapMasterPatientIndexClient implements MasterPatientIndexClient {
             ResourceUtils.getURL(config.getKeystorePath()).openStream();
         InputStream truststoreInputStream =
             ResourceUtils.getURL(config.getTruststorePath()).openStream()) {
-
       // Keystore
       KeyStore keystore = KeyStore.getInstance("JKS");
       keystore.load(keystoreInputStream, config.getKeystorePassword().toCharArray());
-
       KeyManagerFactory kmf =
           KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
       kmf.init(keystore, config.getKeystorePassword().toCharArray());
-
       final X509KeyManager origKm = (X509KeyManager) kmf.getKeyManagers()[0];
-
       // Truststore
       KeyStore truststore = KeyStore.getInstance("JKS");
       truststore.load(truststoreInputStream, config.getTruststorePassword().toCharArray());
       TrustManagerFactory trustManagerFactory =
           TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
       trustManagerFactory.init(truststore);
-
       // SSL Context
       SSLContext sslContext = SSLContext.getInstance("TLS");
       X509KeyManager keyManager =
@@ -104,7 +100,6 @@ public class SoapMasterPatientIndexClient implements MasterPatientIndexClient {
               return origKm.getServerAliases(keyType, issuers);
             }
           };
-
       sslContext.init(
           new KeyManager[] {keyManager},
           trustManagerFactory.getTrustManagers(),
@@ -123,6 +118,15 @@ public class SoapMasterPatientIndexClient implements MasterPatientIndexClient {
             sslContext().getSocketFactory());
     bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, config.getUrl());
     return port;
+  }
+
+  /** Make a 1305 request. */
+  @Override
+  @SneakyThrows
+  public PRPAIN201306UV02 request1305ByAttributes(Mpi1305RequestAttributes attributes) {
+    PRPAIN201305UV02 mvi1305RequestBody =
+        Mpi1305Creator.builder().config(config).attributes(attributes).build().asSoapRequest();
+    return port().prpaIN201305UV02(mvi1305RequestBody);
   }
 
   /** Make a 1309 request. */
