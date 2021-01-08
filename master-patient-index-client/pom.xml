@@ -9,7 +9,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>gov.va.api.lighthouse</groupId>
   <artifactId>master-patient-index-client</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4-SNAPSHOT</version>
   <packaging>jar</packaging>
   <properties/>
   <dependencies>
