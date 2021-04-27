@@ -51,13 +51,13 @@ public class Mpi1309Creator {
 
   JAXBElement<MCCIMT000100UV01Agent> asAgent() {
     return new JAXBElement<>(
-        new QName("asAgent"),
+        new QName("urn:hl7-org:v3", "asAgent"),
         MCCIMT000100UV01Agent.class,
         MCCIMT000100UV01Agent.builder()
             .classCode(List.of("AGNT"))
             .representedOrganization(
                 new JAXBElement<>(
-                    new QName("representedOrganization"),
+                    new QName("urn:hl7-org:v3", "representedOrganization"),
                     MCCIMT000100UV01Organization.class,
                     MCCIMT000100UV01Organization.builder()
                         .classCode("ORG")
@@ -140,10 +140,20 @@ public class Mpi1309Creator {
     String userId = config.getUserId();
     if (userId.contains(" ")) {
       return List.of(
-          new JAXBElement<>(new QName("given"), String.class, EN.class, getTokenFrom(userId, 0)),
-          new JAXBElement<>(new QName("family"), String.class, EN.class, getTokenFrom(userId, 1)));
+          new JAXBElement<>(
+              new QName("urn:hl7-org:v3", "given"),
+              String.class,
+              EN.class,
+              getTokenFrom(userId, 0)),
+          new JAXBElement<>(
+              new QName("urn:hl7-org:v3", "family"),
+              String.class,
+              EN.class,
+              getTokenFrom(userId, 1)));
     } else {
-      return List.of(new JAXBElement<>(new QName("family"), String.class, EN.class, userId.trim()));
+      return List.of(
+          new JAXBElement<>(
+              new QName("urn:hl7-org:v3", "family"), String.class, EN.class, userId.trim()));
     }
   }
 
@@ -168,7 +178,7 @@ public class Mpi1309Creator {
     ST semanticsText = ST.sTBuilder().build();
     semanticsText.getContent().add("Patient.Id");
     return new JAXBElement<>(
-        new QName("queryByParameter"),
+        new QName("urn:hl7-org:v3", "queryByParameter"),
         PRPAMT201307UV02QueryByParameter.class,
         PRPAMT201307UV02QueryByParameter.builder()
             // ToDo Should this be unique?
