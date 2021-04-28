@@ -1,5 +1,6 @@
 package gov.va.api.lighthouse.mpi;
 
+import com.sun.xml.ws.wsdl.parser.InaccessibleWSDLException;
 import gov.va.oit.oed.vaww.VAIdM;
 import gov.va.oit.oed.vaww.VAIdMPort;
 import java.io.IOException;
@@ -111,6 +112,10 @@ public class SoapMasterPatientIndexClient implements MasterPatientIndexClient {
           trustManagerFactory.getTrustManagers(),
           new SecureRandom());
       return sslContext;
+    } catch (InaccessibleWSDLException e) {
+      log.error("WSDL is inaccessible: {}", e.getMessage());
+      e.getErrors().forEach(t -> log.error("Reason {}", t.getMessage()));
+      throw e;
     } catch (IOException | GeneralSecurityException e) {
       log.error("Failed to create SSL context", e);
       throw e;
@@ -128,7 +133,7 @@ public class SoapMasterPatientIndexClient implements MasterPatientIndexClient {
       bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, config.getUrl());
       return port;
     } catch (MalformedURLException e) {
-      log.error("Failed to create port", e);
+      log.error("Failed to create port for {}", config.getWsdlLocation(), e);
       throw e;
     }
   }
